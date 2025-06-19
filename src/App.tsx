@@ -1,9 +1,7 @@
+import LoginPage from "./pages/login/Index"
+
 function App() {
-  return (
-    <div className="min-h-screen w-full flex justify-center items-center">
-      <h1 className="text-4xl font-bold">Conectar UI</h1>
-    </div>
-  )
+  return <LoginPage />
 }
 
 export default App

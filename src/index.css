@@ -1,25 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-gray-main: oklch(44.9% 0.03 220.5);
+  --color-green-main: oklch(70.6% 0.18 157.2);
+  --color-peach-main: oklch(72.5% 0.16 35.3);
+  --color-gray-lighter: oklch(67.1% 0.02 220.5);
+  --color-green-dark: oklch(41.2% 0.06 172.2);
+  --color-gray-light: oklch(52.4% 0.03 220.5);
+  --color-peach-light: oklch(93.5% 0.05 40.1);
+  --color-green-light: oklch(92.4% 0.05 157.2);
+}
 
 :root {
   font-family: "Josefin Sans", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  --gray-main: #253841;
-  --green-main: #1bb17a;
-  --peach-main: #f58561;
-  --gray-lighter: #909ca2;
-  --green-dark: #1f4547;
-  --gray-light: #546c78;
-  --peach-light: #feebdd;
-  --green-light: #daf1e8;
 }
 
 body {
