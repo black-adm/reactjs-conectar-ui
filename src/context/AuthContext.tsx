@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react';
-import type { SignInRequest } from '../@types/auth';
+import type { SignInRequest, SignUpRequest } from '../@types/auth';
 import type { User } from '../@types/user';
+import { storageKeys } from '../config/storageKeys';
 import { AuthService } from '../services/auth';
 
 interface AuthContextType {
@@ -8,6 +9,7 @@ interface AuthContextType {
   signedIn: boolean;
   loading: boolean;
   signIn: (data: SignInRequest) => Promise<void>;
+  signUp: (data: SignUpRequest) => Promise<void>;
   signOut: () => void;
 }
 
@@ -24,8 +26,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signedIn = !!user;
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const userData = localStorage.getItem('user');
+    const token = localStorage.getItem(storageKeys.accessToken);
+    const userData = localStorage.getItem(storageKeys.loggedUser);
 
     if (token && userData) {
       try {
@@ -33,8 +35,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(parsedUser);
       } catch (error) {
         console.error('Erro ao carregar dados do usuário:', error);
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('user');
+        localStorage.removeItem(storageKeys.accessToken);
+        localStorage.removeItem(storageKeys.loggedUser);
       }
     }
 
@@ -44,15 +46,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signIn = async (data: SignInRequest) => {
     const response = await AuthService.signIn(data);
 
-    localStorage.setItem('accessToken', response.accessToken);
-    localStorage.setItem('user', JSON.stringify(response.user));
+    localStorage.setItem(storageKeys.accessToken, response.accessToken);
+    localStorage.setItem(storageKeys.loggedUser, JSON.stringify(response.user));
+
+    setUser(response.user);
+  };
+
+  const signUp = async (data: SignUpRequest) => {
+    await AuthService.signUp(data);
+
+    const loginData: SignInRequest = {
+      email: data.email,
+      password: data.password
+    };
+
+    const response = await AuthService.signIn(loginData);
+
+    localStorage.setItem(storageKeys.accessToken, response.accessToken);
+    localStorage.setItem(storageKeys.loggedUser, JSON.stringify(response.user));
 
     setUser(response.user);
   };
 
   const signOut = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
+    localStorage.removeItem(storageKeys.accessToken);
+    localStorage.removeItem(storageKeys.loggedUser);
     setUser(null);
   };
 
@@ -62,6 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signedIn,
       loading,
       signIn,
+      signUp,
       signOut
     }}>
       {children}
@@ -70,4 +89,3 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export { AuthContext };
-

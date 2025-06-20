@@ -98,7 +98,7 @@ export function LoginForm() {
               </div>
               <div className="text-center text-sm">
                 Não possui uma conta?{" "}
-                <a href="#" className="text-peach-main underline underline-offset-4 hover:text-green-main">
+                <a href="/cadastrar" className="text-peach-main underline underline-offset-4 hover:text-green-main">
                   Cadastrar
                 </a>
               </div>
