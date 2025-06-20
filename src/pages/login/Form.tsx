@@ -1,7 +1,37 @@
+import toast from "react-hot-toast";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { GoogleLogoIcon, SpinnerGapIcon } from "@phosphor-icons/react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { twMerge } from "../../lib/utils";
+import { AuthService } from "../../services/auth";
+import { loginSchema } from "./schema";
 
 export function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = handleSubmit(async data => {
+    try {
+      await AuthService.signIn(data);
+      toast.success('Login efetuado com sucesso!');
+    } catch {
+      toast.error('Erro ao tentar acessar o sistema! Tente novamente.');
+    }
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <main>
@@ -12,16 +42,11 @@ export function LoginForm() {
           </p>
         </div>
         <div>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="size-4">
-                    <path
-                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <GoogleLogoIcon className="size-5" />
                   Login com o Google
                 </Button>
               </div>
@@ -34,23 +59,43 @@ export function LoginForm() {
                 <div className="grid gap-3">
                   <label htmlFor="email">Email</label>
                   <Input
-                    id="email"
+                    id="current-email"
                     type="email"
                     placeholder="Informe seu e-mail"
-                    required
+                    autoComplete="current-email"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    maxLength={100}
+                    className={twMerge(
+                      errors && errors.email && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                    {...register("email")}
                   />
                 </div>
+                {errors && errors.email && (
+                  <span className="text-sm text-red-500">{errors.email.message}</span>
+                )}
                 <div className="grid gap-3">
                   <label htmlFor="password">Senha</label>
                   <Input
-                    id="password"
+                    id="current-password"
                     type="password"
                     placeholder="********"
-                    required
+                    autoComplete="current-password"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    maxLength={60}
+                    className={twMerge(
+                      errors && errors.password && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                    {...register("password")}
                   />
                 </div>
-                <Button type="submit" className="w-full">
-                  Entrar
+                {errors && errors.password && (
+                  <span className="text-sm text-red-500">{errors.password.message}</span>
+                )}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? <SpinnerGapIcon className="size-6 animate-spin" /> : "Entrar"}
                 </Button>
               </div>
               <div className="text-center text-sm">
