@@ -20,4 +20,18 @@ export class AuthService {
       throw new Error("Internal server error!");
     }
   }
+
+  static async googleSignIn() {
+    try {
+      const { data } = await httpClient.get<SignInResponse>(
+        `/auth/google/login`,
+      );
+
+      localStorage.setItem(storageKeys.accessToken, data.accessToken);
+
+      return data;
+    } catch {
+      throw new Error("Internal server error!");
+    }
+  }
 }

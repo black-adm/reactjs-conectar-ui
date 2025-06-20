@@ -1,16 +1,19 @@
 import toast from "react-hot-toast";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GoogleLogoIcon, SpinnerGapIcon } from "@phosphor-icons/react";
+import { SpinnerGapIcon } from "@phosphor-icons/react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { useAuth } from "../../hooks/useAuth";
 import { twMerge } from "../../lib/utils";
-import { AuthService } from "../../services/auth";
+import { GoogleSignIn } from "./GoogleSignIn";
 import { loginSchema } from "./schema";
 
 export function LoginForm() {
+  const { signIn } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -25,7 +28,7 @@ export function LoginForm() {
 
   const onSubmit = handleSubmit(async data => {
     try {
-      await AuthService.signIn(data);
+      await signIn(data);
       toast.success('Login efetuado com sucesso!');
     } catch {
       toast.error('Erro ao tentar acessar o sistema! Tente novamente.');
@@ -44,12 +47,7 @@ export function LoginForm() {
         <div>
           <form onSubmit={onSubmit}>
             <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full flex items-center gap-2">
-                  <GoogleLogoIcon className="size-5" />
-                  Login com o Google
-                </Button>
-              </div>
+              <GoogleSignIn />
               <div className="after:border-gray-lighter relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-white text-gray-light relative z-10 px-4">
                   Ou continue com
