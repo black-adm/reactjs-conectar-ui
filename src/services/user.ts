@@ -48,4 +48,13 @@ export class UserService {
       throw new Error("Internal server error!");
     }
   }
+
+  static async deleteUser(userId: string) {
+    try {
+      const { data } = await dataClient.delete(`/users/${userId}`);
+      return data;
+    } catch {
+      throw new Error("Internal server error!");
+    }
+  }
 }

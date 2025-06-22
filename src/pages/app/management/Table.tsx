@@ -2,22 +2,16 @@ import {
   ClockIcon,
   CrownIcon,
   PencilSimpleIcon,
-  TrashIcon,
   User as UserIcon
 } from "@phosphor-icons/react";
 
 import { CalendarCheckIcon, DotsThreeIcon } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
-import type { User } from "../../../@types/user";
 import { Button } from "../../../components/Button";
 import { useUser } from "../../../hooks/useUsers";
+import { DeleteUserAction } from "./Delete";
 
-interface UsersTableProps {
-  onEditUser?: (user: User) => void;
-  onDeleteUser?: (user: User) => void;
-}
-
-export function UsersTable({ onEditUser, onDeleteUser }: UsersTableProps) {
+export function UsersTable() {
   const { users, loading, pagination } = useUser();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -183,28 +177,12 @@ export function UsersTable({ onEditUser, onDeleteUser }: UsersTableProps) {
                             size="sm"
                             variant="ghost"
                             className="w-full px-4 py-2 text-left text-sm text-gray-main hover:bg-green-light flex items-center gap-2"
-                            onClick={() => {
-                              onEditUser?.(user);
-                              setOpenDropdown(null);
-                            }}
                           >
                             <PencilSimpleIcon className="size-4" />
                             Editar usuário
                           </Button>
 
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="ghost"
-                            className="w-full px-4 py-2 text-left text-sm text-red-700 hover:bg-red-100 flex items-center gap-2"
-                            onClick={() => {
-                              onDeleteUser?.(user);
-                              setOpenDropdown(null);
-                            }}
-                          >
-                            <TrashIcon className="size-4" />
-                            Excluir usuário
-                          </Button>
+                          <DeleteUserAction userId={user.id} userFullName={user.name} />
                         </div>
                       </>
                     )}

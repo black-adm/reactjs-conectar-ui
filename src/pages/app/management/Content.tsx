@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import type { User } from "../../../@types/user";
+import { useEffect } from "react";
 import { useUser } from "../../../hooks/useUsers";
 import { ManagementUserFilters } from "./Filters";
 import { Pagination } from "./Pagination";
@@ -15,23 +14,12 @@ export function ManagementPageContent() {
     clearError
   } = useUser();
 
-  const [_, setSelectedUser] = useState<User | null>(null);
-
   useEffect(() => {
     getUsers(filters);
   }, [filters, getUsers]);
 
   const handlePageChange = (page: number) => {
     setFilters({ page });
-  };
-
-  const handleEditUser = (user: User) => {
-    setSelectedUser(user);
-    console.log('Editar usuário:', user);
-  };
-
-  const handleDeleteUser = (user: User) => {
-    console.log('Excluir usuário:', user);
   };
 
   return (
@@ -60,10 +48,7 @@ export function ManagementPageContent() {
       )}
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <UsersTable
-          onEditUser={handleEditUser}
-          onDeleteUser={handleDeleteUser}
-        />
+        <UsersTable />
 
         {pagination && (
           <Pagination
