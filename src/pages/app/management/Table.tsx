@@ -85,6 +85,10 @@ export function UsersTable() {
         <h2 className="text-lg font-semibold text-gray-main">
           Usuários cadastrados ({pagination?.total || 0})
         </h2>
+
+        <span className="text-xs text-gray-lighter font-medium sm:hidden">
+          Deslize para o lado para visualizar todos os dados.
+        </span>
       </div>
 
       <div className="overflow-x-auto">

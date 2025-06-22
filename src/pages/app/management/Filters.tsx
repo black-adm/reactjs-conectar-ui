@@ -77,10 +77,10 @@ export function ManagementUserFilters({ filters, onFiltersChange }: UserFiltersP
           </select>
         </div>
 
-        <div className="flex justify-center items-center mt-6">
+        <div className="flex justify-center items-center mt-2 sm:mt-6">
           <Button
             type="button"
-            className="flex items-center gap-2 disabled:bg-transparent disabled:shadow-none disabled:text-gray-light"
+            className="w-full flex items-center gap-2 sm:w-auto disabled:bg-transparent disabled:shadow-none disabled:text-gray-light"
             onClick={handleRefreshData}
             disabled={!filters.sortBy || !filters.role}
           >
