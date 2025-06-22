@@ -3,6 +3,7 @@ import type { SignInRequest, SignUpRequest } from '../@types/auth';
 import type { User } from '../@types/user';
 import { storageKeys } from '../config/storageKeys';
 import { AuthService } from '../services/auth';
+import { UserService } from '../services/user';
 
 interface AuthContextType {
   user: User | null;
@@ -45,8 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signIn = async (data: SignInRequest) => {
     const response = await AuthService.signIn(data);
-
-    const userData = await AuthService.getProfileData(response.accessToken);
+    const userData = await UserService.getProfileData();
 
     localStorage.setItem(storageKeys.accessToken, response.accessToken);
     localStorage.setItem(storageKeys.loggedUser, JSON.stringify(userData));

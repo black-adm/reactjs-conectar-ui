@@ -5,7 +5,7 @@ export const passwordUpdateSchema = z
     currentPassword: z.string().min(1, { message: "Senha atual é obrigatória" }),
     newPassword: z
       .string()
-      .min(8, { message: "Nova senha deve ter pelo menos 8 caracteres" })
+      .min(6, { message: "Nova senha deve ter pelo menos 6 caracteres" })
       .regex(/[a-zA-Z]/, { message: "Nova senha deve conter pelo menos uma letra" })
       .regex(/[0-9]/, { message: "Nova senha deve conter pelo menos um número" })
       .regex(/[^a-zA-Z0-9]/, { message: "Nova senha deve conter pelo menos um caractere especial" }),

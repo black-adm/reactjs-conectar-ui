@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 import {
   passwordUpdateSchema,
   type PasswordUpdateFormData
@@ -7,10 +9,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SpinnerGapIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import type { User } from "../../../@types/user";
 import { Button } from "../../../components/Button";
 import { PasswordInput } from "../../../components/PasswordInput";
+import { UserService } from "../../../services/user";
 
-export function UserUpdate() {
+interface UserUpdateProps {
+  user: User;
+}
+
+export function UserUpdate({ user }: UserUpdateProps) {
   const [isEditingPassword, setIsEditingPassword] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -31,24 +39,28 @@ export function UserUpdate() {
   const onSubmit = async (data: PasswordUpdateFormData) => {
     setLoading(true)
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log("Password update data:", data)
+    const formData = {
+      name: user.name,
+      email: user.email,
+      password: data.newPassword,
+    };
 
-      setIsEditingPassword(false)
-      reset()
-      alert("Senha atualizada com sucesso!")
+    try {
+      await UserService.updateUserData(user.id, formData);
+      setIsEditingPassword(false);
+      reset();
+      toast.success("Senha atualizada com sucesso!");
     } catch (error) {
-      console.error("Error updating password:", error)
-      alert("Erro ao atualizar senha. Tente novamente.")
+      console.error("Error updating password:", error);
+      toast.error("Erro ao atualizar senha. Tente novamente.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   const handleCancel = () => {
-    setIsEditingPassword(false)
-    reset()
+    setIsEditingPassword(false);
+    reset();
   }
 
   return (

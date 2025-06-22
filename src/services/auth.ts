@@ -4,7 +4,6 @@ import type {
   SignUpRequest,
   SignUpResponse
 } from "../@types/auth";
-import type { User } from "../@types/user";
 
 import { storageKeys } from "../config/storageKeys";
 import { httpClient } from "../lib/axios";
@@ -52,23 +51,6 @@ export class AuthService {
       );
 
       localStorage.setItem(storageKeys.accessToken, data.accessToken);
-
-      return data;
-    } catch {
-      throw new Error("Internal server error!");
-    }
-  }
-
-  static async getProfileData(token: string) {
-    try {
-      const { data } = await httpClient.get<User>(
-        `/users/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
 
       return data;
     } catch {
