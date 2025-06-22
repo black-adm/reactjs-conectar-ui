@@ -63,12 +63,12 @@ export function RegisterForm() {
           <span className="text-sm text-red-500">{errors.name.message}</span>
         )}
         <div className="grid gap-3">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="new-email">Email</label>
           <Input
-            id="current-email"
+            id="new-email"
             type="email"
             placeholder="Informe seu e-mail"
-            autoComplete="current-email"
+            autoComplete="new-email"
             autoCorrect="off"
             autoCapitalize="off"
             maxLength={100}
@@ -82,12 +82,12 @@ export function RegisterForm() {
           <span className="text-sm text-red-500">{errors.email.message}</span>
         )}
         <div className="grid gap-3">
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="new-password">Senha</label>
           <Input
-            id="current-password"
+            id="new-password"
             type="password"
             placeholder="********"
-            autoComplete="current-password"
+            autoComplete="new-password"
             autoCorrect="off"
             autoCapitalize="off"
             maxLength={60}

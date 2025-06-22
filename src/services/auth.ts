@@ -6,12 +6,12 @@ import type {
 } from "../@types/auth";
 
 import { storageKeys } from "../config/storageKeys";
-import { httpClient } from "../lib/axios";
+import { authClient } from "../lib/axios";
 
 export class AuthService {
   static async signUp({ name, email, password }: SignUpRequest) {
     try {
-      const { data } = await httpClient.post<SignUpResponse>(
+      const { data } = await authClient.post<SignUpResponse>(
         `/auth/register`,
         {
           name,
@@ -28,7 +28,7 @@ export class AuthService {
 
   static async signIn({ email, password }: SignInRequest) {
     try {
-      const { data } = await httpClient.post<SignInResponse>(
+      const { data } = await authClient.post<SignInResponse>(
         `/auth/login`,
         {
           email,
@@ -46,7 +46,7 @@ export class AuthService {
 
   static async googleSignIn() {
     try {
-      const { data } = await httpClient.get<SignInResponse>(
+      const { data } = await authClient.get<SignInResponse>(
         `/auth/google/login`,
       );
 

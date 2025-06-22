@@ -17,6 +17,8 @@ export function UserAccountInfo({ user }: UserAccountInfoProps) {
     });
   }
 
+  console.log(user.createdAt)
+
   return (
     <div className="rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8">
       <h3 className="text-xl font-semibold mb-6">

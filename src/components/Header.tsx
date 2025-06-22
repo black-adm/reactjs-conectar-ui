@@ -8,7 +8,7 @@ export function Header() {
 
   return (
     <header className="flex flex-col space-y-3 sticky top-0 shrink-0 z-10 border-b border-gray-200">
-      <div className="flex justify-between items-center pt-2 pb-4 px-12 lg:max-w-6xl lg:w-full lg:mx-auto lg:px-0">
+      <div className="flex justify-between items-center pt-2 pb-4 px-8 md:px-12 lg:max-w-6xl lg:w-full lg:mx-auto xl:px-0">
         <a href="/" className="pt-1.5 w-24">
           <img src={logoImg} alt="Logo da empresa Conéctar" />
         </a>

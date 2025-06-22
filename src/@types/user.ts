@@ -14,3 +14,23 @@ export interface UpdateUserRequest {
   email: string;
   password: string;
 }
+
+export interface UserFilters {
+  role?: 'admin' | 'user';
+  sortBy?: 'createdAt' | 'name';
+  order?: 'asc' | 'desc';
+  page: number;
+  limit: number;
+}
+
+export interface GetUsersResponse {
+  data: User[];
+  pagination: Pagination;
+}
+
+export interface Pagination {
+  page: number
+  limit: number
+  total: number
+  pages: number
+}
