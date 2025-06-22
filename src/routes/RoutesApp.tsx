@@ -1,5 +1,6 @@
 import HomePage from "../pages/app/home/Index";
 import ManagementPage from "../pages/app/management/Index";
+import AuthSuccessPage from "../pages/login/AuthSuccess";
 import LoginPage from "../pages/login/Index";
 import RegisterPage from "../pages/register/Index";
 
@@ -13,6 +14,7 @@ export function RoutesApp() {
       <Route element={<AuthGuard isPrivate={false} />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastrar" element={<RegisterPage />} />
+        <Route path="/auth/success" element={<AuthSuccessPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Route>
 
