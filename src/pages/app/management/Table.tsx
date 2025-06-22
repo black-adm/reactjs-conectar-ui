@@ -1,7 +1,6 @@
 import {
   ClockIcon,
   CrownIcon,
-  PencilSimpleIcon,
   User as UserIcon
 } from "@phosphor-icons/react";
 
@@ -10,6 +9,7 @@ import { useState } from "react";
 import { Button } from "../../../components/Button";
 import { useUser } from "../../../hooks/useUsers";
 import { DeleteUserAction } from "./Delete";
+import { UpdateUserAction } from "./Update";
 
 export function UsersTable() {
   const { users, loading, pagination } = useUser();
@@ -172,16 +172,7 @@ export function UsersTable() {
                         />
 
                         <div className="absolute bg-white right-0 top-full mt-1 w-44 p-2 rounded-lg shadow-lg border border-gray-200 py-1 z-20">
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="ghost"
-                            className="w-full px-4 py-2 text-left text-sm text-gray-main hover:bg-green-light flex items-center gap-2"
-                          >
-                            <PencilSimpleIcon className="size-4" />
-                            Editar usuário
-                          </Button>
-
+                          <UpdateUserAction user={user} />
                           <DeleteUserAction userId={user.id} userFullName={user.name} />
                         </div>
                       </>

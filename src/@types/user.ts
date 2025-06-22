@@ -12,7 +12,7 @@ export interface User {
 export interface UpdateUserRequest {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role?: string;
 }
 
