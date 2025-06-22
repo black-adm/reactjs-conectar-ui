@@ -12,14 +12,12 @@ const buttonVariants = cva(
           "bg-green-main text-white shadow hover:bg-green-dark",
         outline:
           "border border-gray-lighter bg-transparent shadow-sm hover:bg-green-light hover:text-green-main hover:border-none",
-        secondary:
-          "bg-green-lighter text-secondary-foreground shadow-sm hover:bg-bg-green-light",
         ghost: "hover:bg-gray-lighter hover:text-black",
       },
       size: {
         sm: "h-10 rounded-lg px-3 text-xs",
         default: "h-11 rounded-lg px-8 text-base",
-        icon: "h-9 w-9",
+        icon: "h-9 w-9 border-gray-300",
       },
     },
     defaultVariants: {

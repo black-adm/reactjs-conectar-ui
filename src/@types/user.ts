@@ -6,4 +6,5 @@ export interface User {
   googleId?: string;
   lastLoginAt: string;
   createdAt: string;
+  updatedAt: string;
 }

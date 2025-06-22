@@ -46,8 +46,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signIn = async (data: SignInRequest) => {
     const response = await AuthService.signIn(data);
 
+    const userData = await AuthService.getProfileData(response.accessToken);
+
     localStorage.setItem(storageKeys.accessToken, response.accessToken);
-    localStorage.setItem(storageKeys.loggedUser, JSON.stringify(response.user));
+    localStorage.setItem(storageKeys.loggedUser, JSON.stringify(userData));
 
     setUser(response.user);
   };
@@ -89,3 +91,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export { AuthContext };
+
