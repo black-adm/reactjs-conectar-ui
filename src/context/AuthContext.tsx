@@ -71,8 +71,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const signOut = () => {
-    localStorage.removeItem(storageKeys.accessToken);
-    localStorage.removeItem(storageKeys.loggedUser);
+    localStorage.clear();
     setUser(null);
   };
 
