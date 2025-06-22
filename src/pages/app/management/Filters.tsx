@@ -1,7 +1,7 @@
-import { FunnelIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { ArrowsClockwiseIcon, FunnelIcon } from "@phosphor-icons/react";
 import type { UserFilters } from "../../../@types/user";
-import { Input } from "../../../components/Input";
+import { Button } from "../../../components/Button";
+import { useUser } from "../../../hooks/useUsers";
 
 interface UserFiltersProps {
   filters: UserFilters;
@@ -9,7 +9,19 @@ interface UserFiltersProps {
 }
 
 export function ManagementUserFilters({ filters, onFiltersChange }: UserFiltersProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const { getUsers } = useUser();
+
+  const defaultFilters = {
+    page: 1,
+    limit: 10,
+    role: undefined,
+    sortBy: undefined,
+    order: undefined
+  };
+
+  const handleRefreshData = async () => {
+    return await getUsers(defaultFilters);
+  }
 
   return (
     <div className="p-2">
@@ -18,19 +30,7 @@ export function ManagementUserFilters({ filters, onFiltersChange }: UserFiltersP
         <h3 className="text-lg text-gray-main font-semibold">Filtros</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-main mb-2">
-            Buscar usuário
-          </label>
-          <Input
-            placeholder="Nome do usuário..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-          />
-        </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-4 md:items-center gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-main mb-2">
             Papel
@@ -75,6 +75,18 @@ export function ManagementUserFilters({ filters, onFiltersChange }: UserFiltersP
             <option value="asc">Crescente</option>
             <option value="desc">Decrescente</option>
           </select>
+        </div>
+
+        <div className="flex justify-center items-center mt-6">
+          <Button
+            type="button"
+            className="flex items-center gap-2 disabled:bg-transparent disabled:shadow-none disabled:text-gray-light"
+            onClick={handleRefreshData}
+            disabled={!filters.sortBy || !filters.role}
+          >
+            <ArrowsClockwiseIcon className="size-5" />
+            Reoordenar
+          </Button>
         </div>
       </div>
     </div>
