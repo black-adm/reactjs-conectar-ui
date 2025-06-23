@@ -7,6 +7,7 @@ import { UserService } from '../services/user';
 
 interface AuthContextType {
   user: User | null;
+  setUser: (user: User | null) => void;
   signedIn: boolean;
   loading: boolean;
   signIn: (data: SignInRequest) => Promise<void>;
@@ -78,6 +79,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   return (
     <AuthContext.Provider value={{
       user,
+      setUser,
       signedIn,
       loading,
       signIn,
