@@ -40,7 +40,7 @@ $ pnpm run lint
 * Deletar usuários do sistema.
 
 <div align="center">
-  <img src="./admin.png" alt="Conéctar página de administradores" />
+  <img src="./public/admin.png" alt="Conéctar página de administradores" />
 </div>
 
 &nbsp;
@@ -51,5 +51,11 @@ $ pnpm run lint
 * Atualizar a senha de acesso ao sistema.
 
 <div align="center">
-  <img src="./user.png" alt="SConéctar página de usuários comuns" />
+  <img src="./public/user.png" alt="SConéctar página de usuários comuns" />
 </div>
+
+## Backend da aplicação
+
+O repositório com todo o código do backend desta aplicação se encontra no link abaixo:
+
+[Link do repositório](https://github.com/black-adm/nestj-conectar-backend)
